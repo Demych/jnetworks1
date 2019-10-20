@@ -1,10 +1,6 @@
 package com.jnetworks;
 
-import com.sun.tracing.ProviderName;
-import org.junit.After;
-import org.junit.Before;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PrinterTest {
 
@@ -51,6 +47,37 @@ public class PrinterTest {
     public void reduceString5() {
         String pageNumbers = "1,2,3,a";
         String expected = "not valid position is 6";
+        String actual = Printer.reduceString(pageNumbers);
+        assertEquals(expected, actual);
+    }
+
+    @org.junit.Test
+    public void reduceString6() {
+        String pageNumbers = "1";
+        String expected = "1";
+        String actual = Printer.reduceString(pageNumbers);
+        assertEquals(expected, actual);
+    }
+
+    @org.junit.Test
+    public void reduceString7() {
+        String pageNumbers = "10";
+        String expected = "10";
+        String actual = Printer.reduceString(pageNumbers);
+        assertEquals(expected, actual);
+    }
+
+    @org.junit.Test
+    public void reduceString8() {
+        String pageNumbers = "";
+        String expected = "rawPagesNumbers parameter can't be null or empty";
+        String actual = Printer.reduceString(pageNumbers);
+        assertEquals(expected, actual);
+    }
+    @org.junit.Test
+    public void reduceString9() {
+        String pageNumbers = null;
+        String expected = "rawPagesNumbers parameter can't be null or empty";
         String actual = Printer.reduceString(pageNumbers);
         assertEquals(expected, actual);
     }

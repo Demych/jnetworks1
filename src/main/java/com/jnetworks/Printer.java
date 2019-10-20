@@ -7,24 +7,32 @@ public class Printer {
 
     public static String reduceString(String pageNumber) {
 
+        if (pageNumber == null || pageNumber.isEmpty()) {
+            return "rawPagesNumbers parameter can't be null or empty";
+        }
+
         StringBuilder reducePageNumber = new StringBuilder();
 
         List<Integer> notValidPositions = validateRaw(pageNumber);
         if (getNotValidPositions(reducePageNumber, notValidPositions))
             return reducePageNumber.toString();
 
+
         List<Integer> sortedPageNumber = splitPageNumber(pageNumber);
+        if (sortedPageNumber.size() == 1)
+            return sortedPageNumber.get(0).toString();
+        reducePageNumber = reduceRawPageNumbers(sortedPageNumber);
+        return reducePageNumber.toString();
+    }
+
+    private static StringBuilder reduceRawPageNumbers(List<Integer> sortedPageNumber) {
+        StringBuilder reducePageNumber = new StringBuilder();
         int pageNumbers = sortedPageNumber.size();
 
         int startPage = sortedPageNumber.get(0);
         int endPage = sortedPageNumber.get(0);
 
 
-        reduceRawPageNumbers(reducePageNumber, sortedPageNumber, pageNumbers, startPage, endPage);
-        return reducePageNumber.toString();
-    }
-
-    private static void reduceRawPageNumbers(StringBuilder reducePageNumber, List<Integer> sortedPageNumber, int pageNumbers, int startPage, int endPage) {
         for (int i = 1; i < pageNumbers; i++) {
             if (sortedPageNumber.get(i - 1) + 1 == sortedPageNumber.get(i)) {
                 endPage = sortedPageNumber.get(i);
@@ -49,6 +57,7 @@ public class Printer {
                 }
             }
         }
+        return reducePageNumber;
     }
 
     private static boolean getNotValidPositions(StringBuilder reducePageNumber, List<Integer> notValidPositions) {
