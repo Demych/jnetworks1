@@ -81,4 +81,11 @@ public class PrinterTest {
         String actual = Printer.reduceString(pageNumbers);
         assertEquals(expected, actual);
     }
+    @org.junit.Test
+    public void reduceString10() {
+        String pageNumbers = "1,21474836483";
+        String expected = "the numbers can't be greater than 2147483647";
+        String actual = Printer.reduceString(pageNumbers);
+        assertEquals(expected, actual);
+    }
 }

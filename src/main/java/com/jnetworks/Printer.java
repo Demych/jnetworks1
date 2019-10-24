@@ -18,7 +18,12 @@ public class Printer {
             return reducePageNumber.toString();
 
 
-        List<Integer> sortedPageNumber = splitPageNumber(pageNumber);
+        List<Integer> sortedPageNumber = null;
+        try {
+            sortedPageNumber = splitPageNumber(pageNumber);
+        } catch (Exception e) {
+            return "the numbers can't be greater than 2147483647";
+        }
         if (sortedPageNumber.size() == 1)
             return sortedPageNumber.get(0).toString();
         reducePageNumber = reduceRawPageNumbers(sortedPageNumber);
@@ -73,8 +78,12 @@ public class Printer {
         String[] splitPages = pageNumber.split(",");
 
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < splitPages.length; i++) {
-            list.add(Integer.parseInt(splitPages[i]));
+        try {
+            for (int i = 0; i < splitPages.length; i++) {
+                list.add(Integer.parseInt(splitPages[i]));
+            }
+        } catch (NumberFormatException e) {
+            throw e;
         }
         return list.stream().sorted().distinct().collect(Collectors.toList());
     }
